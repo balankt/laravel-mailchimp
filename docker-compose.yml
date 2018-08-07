@@ -1,0 +1,58 @@
+version: '3'
+services:
+    nginx:
+        build:
+            context: ./
+            dockerfile: ./.docker/nginx.docker
+        volumes:
+            - ./:/var/www:cached
+            - ./.docker/nginx/ssl:/etc/nginx/ssl
+        ports:
+            - "8080:443"
+        links:
+            - php-fpm
+    php-fpm:
+        build:
+            context: ./
+            dockerfile: ./.docker/php-fpm.docker
+        volumes:
+            - ./:/var/www
+        links:
+            - mysql
+        environment:
+            - "DB_PORT=3306"
+            - "DB_HOST=mysql"
+    php-cli:
+        build:
+            context: ./
+            dockerfile: ./.docker/php-cli.docker
+        volumes:
+            - ./:/var/www:cached
+        links:
+            - mysql
+        environment:
+            - "DB_PORT=3306"
+            - "DB_HOST=mysql"
+        tty: true
+    mysql:
+        image: mysql:5.7
+        volumes:
+            - ./.db:/var/lib/mysql:cached
+        command: mysqld --sql-mode=NO_ENGINE_SUBSTITUTION
+        environment:
+            - "MYSQL_ROOT_PASSWORD=secret"
+            - "MYSQL_USER=app"
+            - "MYSQL_PASSWORD=secret"
+            - "MYSQL_DATABASE=app"
+        ports:
+            - "3306:3306"
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:latest
+        environment:
+          - PMA_HOST=mysql
+          - PMA_USER=app
+          - PMA_PASSWORD=secret
+        volumes:
+          - /sessions
+        ports:
+        - "8079:80"
