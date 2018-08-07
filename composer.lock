@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "37cf1b978f1c21210c11fe4dc9653460",
+    "content-hash": "cc4b0ed5fd6d17e9ff535cf879ec6c17",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -801,6 +801,43 @@
                 }
             ],
             "time": "2015-04-20T18:58:01+00:00"
+        },
+        {
+            "name": "jhut89/mailchimp3php",
+            "version": "2.3.02",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Jhut89/Mailchimp-API-3.0-PHP.git",
+                "reference": "917c2252dd982fc8ca82c9d4eb906f66020dda46"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Jhut89/Mailchimp-API-3.0-PHP/zipball/917c2252dd982fc8ca82c9d4eb906f66020dda46",
+                "reference": "917c2252dd982fc8ca82c9d4eb906f66020dda46",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/mailchimpRoot.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "John Hutcheson",
+                    "email": "hutch@theresearchgroup.io"
+                }
+            ],
+            "description": "A php library for version 3.0 of MailChimp's API",
+            "homepage": "https://github.com/Jhut89/Mailchimp-API-3.0-PHP",
+            "time": "2017-11-14T16:43:40+00:00"
         },
         {
             "name": "laravel/framework",
