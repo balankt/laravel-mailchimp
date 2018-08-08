@@ -10,27 +10,27 @@ class MailList extends Model
     public $timestamps = false;
 
     protected $fillable = [
-            'id',
-            'web_id',
-            'name',
-            'contact_id',
-            'contact',
-            'permission_reminder',
-            'use_archive_bar',
-            'campaign_defaults',
-            'notify_on_subscribe',
-            'notify_on_unsubscribe',
-            'date_created',
-            'list_rating',
-            'email_type_option',
-            'subscribe_url_short',
-            'subscribe_url_long',
-            'beamer_address',
-            'visibility',
-            'double_optin',
-            'marketing_permissions',
-            'stats',
-        ];
+        'id',
+        'web_id',
+        'name',
+        'contact_id',
+        'contact',
+        'permission_reminder',
+        'use_archive_bar',
+        'campaign_defaults',
+        'notify_on_subscribe',
+        'notify_on_unsubscribe',
+        'date_created',
+        'list_rating',
+        'email_type_option',
+        'subscribe_url_short',
+        'subscribe_url_long',
+        'beamer_address',
+        'visibility',
+        'double_optin',
+        'marketing_permissions',
+        'stats',
+    ];
 
     protected $casts = [
         'contact' => 'array',
@@ -55,8 +55,12 @@ class MailList extends Model
     }
 
     public function setDateCreatedAttribute($value)
-        {
-            $this->attributes['date_created'] = Carbon::parse($value)->toDateTimeString();
-        }
+    {
+        $this->attributes['date_created'] = Carbon::parse($value)->toDateTimeString();
+    }
+    public function setIdAttribute($value)
+    {
+        $this->attributes['id'] = (string) $value;
+    }
 
 }

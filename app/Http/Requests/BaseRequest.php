@@ -2,7 +2,13 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
+
+
 
 class BaseRequest extends FormRequest
 {
@@ -11,20 +17,26 @@ class BaseRequest extends FormRequest
      *
      * @return bool
      */
-   /* public function authorize()
+    public function authorize()
     {
-        return false;
-    }*/
+        /*In this api authentication don't used, so set true */
+        return true;
+    }
+
 
     /**
-     * Get the validation rules that apply to the request.
+     * Handle a failed validation attempt.
      *
-     * @return array
+     * @param  \Illuminate\Contracts\Validation\Validator  $validator
+     * @return void
+     *
+     * @throws \Illuminate\Http\Exceptions\HttpResponseException
      */
-    public function rules()
+    protected function failedValidation(Validator $validator)
     {
-        return [
-            //
-        ];
+        $errors = (new ValidationException($validator))->errors();
+        throw new HttpResponseException(response()->json(['success' => false, 'errors' => $errors
+        ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY));
     }
+
 }

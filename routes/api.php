@@ -10,9 +10,6 @@
 |
 */
 
-/*Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});*/
 Route::group(['as' => 'api.', 'namespace' => 'Api'],
     function () {
         /**
@@ -23,5 +20,4 @@ Route::group(['as' => 'api.', 'namespace' => 'Api'],
          * Members
          */
         Route::apiResource('lists.members', 'MembersController');
-        Route::post('lists/{listId}', 'ListsController@batchSubscribe');
     });

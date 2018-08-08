@@ -2,94 +2,71 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Entity\ListMember;
 use App\Http\Requests\ListMemberRequest;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use DrewM\MailChimp\MailChimp;
-use Log;
-use Validator;
+use App\Services\ListMemberService;
+
 
 class MembersController extends Controller
 {
-    private $mailChimpApi;
+    private $service;
 
-    public function __construct()
+    /**
+     * MembersController constructor.
+     * @param ListMemberService $service
+     */
+    public function __construct(ListMemberService $service)
     {
-        $this->mailChimpApi = new MailChimp(env('MAILCHIMP_APIKEY'));
+        $this->service = $service;
     }
 
-    public function index(string $listId)
+    /**
+     * @param String $listId
+     * @return \Illuminate\Http\Response
+     */
+    public function index(String $listId)
     {
-        $resultApi = $this->mailChimpApi->get("lists/{$listId}/members");
-        /*  Log::channel('debug')->debug([
-              '$resultApi'=>$resultApi,
-        ]);*/
-
-        //TODO: move to new method synchronize
-        foreach ($resultApi['members'] as $item){
-            $list = ListMember::where('id', 'like', $item['id'])->first();
-            if ($list) {
-                $list->update($item);
-            } else {
-                ListMember::create($item);
-            }
-        }
-        $mailList = ListMember::all()->toArray();
-        return $this->sendResponse([$mailList]);
+        return $this->sendResponse(['members' => $this->service->getAll($listId)]);
     }
 
-    public function show(string $listId, string $memberHash)
+    /**
+     * @param String $listId
+     * @param String $memberHash
+     * @return \Illuminate\Http\Response
+     */
+    public function show(String $listId, String $memberHash)
     {
-        //TODO: move to new method synchronizeOne if not found
-        $member = ListMember::where('list_id','like',$listId)->where('id', 'like', $memberHash)->first();
-        if (!$member){
-            $result = $this->mailChimpApi->get("lists/{$listId}/members/{$memberHash}");
-            if (!empty($result['status']) && $result['status'] === 404){
-                return $this->sendError('The requested resource could not be found');
-            }
-            $member= ListMember::create($result);
-        }
-        return $this->sendResponse($member);
+        return $this->sendResponse($this->service->getOne($listId, $memberHash));
     }
 
-    public function store(Request $request, string $listId)
+    /**
+     * @param ListMemberRequest $request
+     * @param String $listId
+     * @return \Illuminate\Http\Response
+     */
+    public function store(ListMemberRequest $request, String $listId)
     {
-        $list = new ListMemberRequest();
-        $validator = Validator::make($request->all(), $list->rules());
-        if ($validator->fails()) {
-            return response()->json(['success'=> false, 'error'=> $validator->messages(), 'data'=>[]]);
-        }
-        $result = $this->mailChimpApi->post("lists/{$listId}/members", $request->all());
-        if (!empty($result['status']) && $result['status'] === 400){
-            return $this->sendError($result['detail'],[],400);
-        }
-        $member = ListMember::create($result);
-        return $this->sendResponse($member, 'created',201);
+        return $this->sendResponse($this->service->store($listId, $request->all()), 'created', 201);
     }
 
-    public function update(Request $request, string $listId, string $memberHash)
+    /**
+     * @param ListMemberRequest $request
+     * @param String $listId
+     * @param String $memberHash
+     * @return \Illuminate\Http\Response
+     */
+    public function update(ListMemberRequest $request, String $listId, String $memberHash)
     {
-        $list = new ListMemberRequest();
-        $validator = Validator::make($request->all(), $list->rules());
-        if ($validator->fails()) {
-            return response()->json(['success'=> false, 'error'=> $validator->messages(), 'data'=>[]]);
-        }
-        $result = $this->mailChimpApi->patch("lists/{$listId}/members/{$memberHash}", $request->all());
-        if (!empty($result['status']) && $result['status'] === 404){
-            return $this->sendError($result['detail']);
-        }
-        $member = ListMember::where('list_id','like',$listId)->where('id', 'like', $memberHash)->first();
-        $member->update($request->all());
-        return $this->sendResponse($member, 'updated',200);
+        return $this->sendResponse($this->service->update($listId, $memberHash, $request->all()), 'updated', 200);
     }
 
-
-    public function destroy(string $listId, string $memberHash)
+    /**
+     * @param String $listId
+     * @param String $memberHash
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(String $listId, String $memberHash)
     {
-        $mailList = ListMember::where('list_id','like',$listId)->where('id', 'like', $memberHash)->first();
-        $mailList->delete();
-        $this->mailChimpApi->delete("lists/{$listId}/members/{$memberHash}");
-        return $this->sendResponse(null, 'deleted',204);
+        return $this->sendResponse($this->service->delete($listId, $memberHash), 'deleted', 204);
     }
 }

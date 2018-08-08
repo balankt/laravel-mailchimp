@@ -16,7 +16,7 @@ class ListMemberRequest extends BaseRequest
         return [
                     'email_address' =>'required|email',
                     'email_type' =>['string', Rule::in(['html', 'text'])],
-                    'status' =>'required|string',
+                    'status' =>['required','string', Rule::in(['subscribed', 'unsubscribed','cleaned','pending'])],
                     'merge_fields' =>'array',
                     'interests' =>'array',
                     'language' =>'string',
