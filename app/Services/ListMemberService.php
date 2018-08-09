@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Entity\ListMember;
 use App\Jobs\DeleteListMember;
-use App\Jobs\SynchronizeListMembers;
 use App\Jobs\UpdateListMember;
 use DrewM\MailChimp\MailChimp;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -28,8 +27,7 @@ class ListMemberService
      */
     public function getAll(String $listId)
     {
-        SynchronizeListMembers::dispatch($listId);
-        return ListMember::all()->toArray();
+        return ListMember::where('list_id', 'like', $listId)->get()->toArray();
     }
 
     /**

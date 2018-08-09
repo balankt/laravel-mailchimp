@@ -1,0 +1,338 @@
+{
+	"info": {
+		"_postman_id": "ac9e0845-7833-43cd-a419-d75f3a344f48",
+		"name": "laravel-mailchimp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"_postman_id": "dedcd49f-aa3c-4428-9d2f-5d8a2212b181",
+			"name": "api/lists delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://localhost:8080/api/lists/a2cdbfba1a",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"lists",
+						"a2cdbfba1a"
+					]
+				},
+				"description": "delete"
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "40d2574a-b514-4f83-ad95-ac1d713afa7d",
+			"name": "api/lists store",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Test666\",\n\t\"contact\": {\n\t\t\"company\": \"Test\",\n\t\t\"address1\": \"Test\",\n\t\t\"address2\": \"ttt\",\n\t\t\"city\": \"city\",\n\t\t\"state\": \"state\",\n\t\t\"zip\": \"234\",\n\t\t\"country\": \"US\",\n\t\t\"phone\": \"\"\n\t},\n\t\"permission_reminder\": \"test\",\n\t\"use_archive_bar\": true,\n\t\"campaign_defaults\": {\n\t\t\"from_name\": \"tt\",\n\t\t\"from_email\": \"rr@r.com\",\n\t\t\"subject\": \"test\",\n\t\t\"language\": \"en\"\n\t},\n\t\"notify_on_subscribe\": \"\",\n\t\"notify_on_unsubscribe\": \"\",\n\t\"email_type_option\": false,\n\t\"visibility\": \"prv\",\n\t\"double_optin\": false,\n\t\"marketing_permissions\": false\n}"
+				},
+				"url": {
+					"raw": "https://localhost:8080/api/lists",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"lists"
+					]
+				},
+				"description": "delete"
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "2d9e1e0f-6230-4584-ae9c-041ee9614770",
+			"name": "api/lists update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"List 8\",\n\t\"contact\": {\n      \"company\": \"Test\",\n            \"address1\": \"Test\",\n            \"address2\": \"ttt\",\n            \"city\": \"city\",\n            \"state\": \"state\",\n            \"zip\": \"234\",\n            \"country\": \"US\",\n            \"phone\": \"\"\n\t},\n\t\"permission_reminder\": \"test\",\n\t\"use_archive_bar\": true,\n\t\"campaign_defaults\": {\n\t\t\"from_name\": \"tt\",\n\t\t\"from_email\": \"rr@r.com\",\n\t\t\"subject\": \"test\",\n\t\t\"language\": \"en\"\n\t},\n\t\"notify_on_subscribe\": \"\",\n\t\"notify_on_unsubscribe\": \"\",\n\t\"email_type_option\": false,\n\t\"visibility\": \"prv\",\n\t\"double_optin\": false,\n\t\"marketing_permissions\": false\n}"
+				},
+				"url": {
+					"raw": "https://localhost:8080/api/lists/06b5fae2aa",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"lists",
+						"06b5fae2aa"
+					]
+				},
+				"description": "delete"
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "a6b41a96-6bd9-4ebf-9aac-96fe2f326d72",
+			"name": "api/lists show",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"We111222\",\n\t\"contact\": {\n\t\t\"company\": \"Websee\",\n\t\t\"address1\": \"Test\",\n\t\t\"address2\": \"ttt\",\n\t\t\"city\": \"\",\n\t\t\"state\": \"\",\n\t\t\"zip\": \"\",\n\t\t\"country\": \"\",\n\t\t\"phone\": \"\"\n\t},\n\t\"permission_reminder\": \"test\",\n\t\"use_archive_bar\": true,\n\t\"campaign_defaults\": {\n\t\t\"from_name\": \"tt\",\n\t\t\"from_email\": \"rr@r.com\",\n\t\t\"subject\": \"test\",\n\t\t\"language\": \"en\"\n\t},\n\t\"notify_on_subscribe\": \"\",\n\t\"notify_on_unsubscribe\": \"\",\n\t\"email_type_option\": false,\n\t\"visibility\": \"prv\",\n\t\"double_optin\": false,\n\t\"marketing_permissions\": false\n}"
+				},
+				"url": {
+					"raw": "https://localhost:8080/api/lists/72505160de",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"lists",
+						"72505160de"
+					]
+				},
+				"description": "delete"
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "3b132893-f2da-4247-93b7-813e268b687d",
+			"name": "api/lists index",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"We111222\",\n\t\"contact\": {\n\t\t\"company\": \"Websee\",\n\t\t\"address1\": \"Test\",\n\t\t\"address2\": \"ttt\",\n\t\t\"city\": \"\",\n\t\t\"state\": \"\",\n\t\t\"zip\": \"\",\n\t\t\"country\": \"\",\n\t\t\"phone\": \"\"\n\t},\n\t\"permission_reminder\": \"test\",\n\t\"use_archive_bar\": true,\n\t\"campaign_defaults\": {\n\t\t\"from_name\": \"tt\",\n\t\t\"from_email\": \"rr@r.com\",\n\t\t\"subject\": \"test\",\n\t\t\"language\": \"en\"\n\t},\n\t\"notify_on_subscribe\": \"\",\n\t\"notify_on_unsubscribe\": \"\",\n\t\"email_type_option\": false,\n\t\"visibility\": \"prv\",\n\t\"double_optin\": false,\n\t\"marketing_permissions\": false\n}"
+				},
+				"url": {
+					"raw": "https://localhost:8080/api/lists",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"lists"
+					]
+				},
+				"description": "delete"
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "88982651-c221-46fd-8aab-4c1ea03a32d7",
+			"name": "api/lists/members index",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"We111222\",\n\t\"contact\": {\n\t\t\"company\": \"Websee\",\n\t\t\"address1\": \"Test\",\n\t\t\"address2\": \"ttt\",\n\t\t\"city\": \"\",\n\t\t\"state\": \"\",\n\t\t\"zip\": \"\",\n\t\t\"country\": \"\",\n\t\t\"phone\": \"\"\n\t},\n\t\"permission_reminder\": \"test\",\n\t\"use_archive_bar\": true,\n\t\"campaign_defaults\": {\n\t\t\"from_name\": \"tt\",\n\t\t\"from_email\": \"rr@r.com\",\n\t\t\"subject\": \"test\",\n\t\t\"language\": \"en\"\n\t},\n\t\"notify_on_subscribe\": \"\",\n\t\"notify_on_unsubscribe\": \"\",\n\t\"email_type_option\": false,\n\t\"visibility\": \"prv\",\n\t\"double_optin\": false,\n\t\"marketing_permissions\": false\n}"
+				},
+				"url": {
+					"raw": "https://localhost:8080/api/lists/0084cb14ea/members/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"lists",
+						"0084cb14ea",
+						"members",
+						""
+					]
+				},
+				"description": "delete"
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "4a6c9df2-6eee-4331-a6b2-a2685ec0b3fb",
+			"name": "api/lists/member show",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"We111222\",\n\t\"contact\": {\n\t\t\"company\": \"Websee\",\n\t\t\"address1\": \"Test\",\n\t\t\"address2\": \"ttt\",\n\t\t\"city\": \"\",\n\t\t\"state\": \"\",\n\t\t\"zip\": \"\",\n\t\t\"country\": \"\",\n\t\t\"phone\": \"\"\n\t},\n\t\"permission_reminder\": \"test\",\n\t\"use_archive_bar\": true,\n\t\"campaign_defaults\": {\n\t\t\"from_name\": \"tt\",\n\t\t\"from_email\": \"rr@r.com\",\n\t\t\"subject\": \"test\",\n\t\t\"language\": \"en\"\n\t},\n\t\"notify_on_subscribe\": \"\",\n\t\"notify_on_unsubscribe\": \"\",\n\t\"email_type_option\": false,\n\t\"visibility\": \"prv\",\n\t\"double_optin\": false,\n\t\"marketing_permissions\": false\n}"
+				},
+				"url": {
+					"raw": "https://localhost:8080/api/lists/72505160de/members/a608549baef9c7d668af7372a1957103",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"lists",
+						"72505160de",
+						"members",
+						"a608549baef9c7d668af7372a1957103"
+					]
+				},
+				"description": "delete"
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "b564ca04-7587-49b0-8c0f-3c2a36dd0e60",
+			"name": "api/lists/members store",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n\t  {\"email_address\": \"u2211332rqb@freddiesjokes.com\", \"status\": \"subscribed\"}\n"
+				},
+				"url": {
+					"raw": "https://localhost:8080/api/lists/d758b68adf/members/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"lists",
+						"d758b68adf",
+						"members",
+						""
+					]
+				},
+				"description": "delete"
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "df0d88c6-5b3e-4c83-921d-ce63899b8e1d",
+			"name": "api/lists/members update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Requested-With",
+						"value": "XMLHttpRequest",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t    \"email_address\":\"exa111@domain.com\", \n    \t\"status\":\"cleaned\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:8080/api/lists/0084cb14ea/members/62eeb292278cc15f5817cb78f7790b08",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"lists",
+						"0084cb14ea",
+						"members",
+						"62eeb292278cc15f5817cb78f7790b08"
+					]
+				},
+				"description": "delete"
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "08b1489a-c21c-4f79-8951-a25e49463bbb",
+			"name": "api/lists/members delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:8080/api/lists/0084cb14ea/members/e44e91c2ae2e5f741a23e8476704cbcb",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"lists",
+						"0084cb14ea",
+						"members",
+						"e44e91c2ae2e5f741a23e8476704cbcb"
+					]
+				},
+				"description": "delete"
+			},
+			"response": []
+		}
+	]
+}

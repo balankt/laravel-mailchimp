@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Entity\MailList;
 use App\Jobs\DeleteMailList;
-use App\Jobs\SynchronizeMailLists;
 use App\Jobs\UpdateMailList;
 use DrewM\MailChimp\MailChimp;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -27,7 +26,6 @@ class MailListService
      */
     public function getAll()
     {
-        SynchronizeMailLists::dispatch();
         return MailList::all()->toArray();
     }
 
