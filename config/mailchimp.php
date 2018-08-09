@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'api_key' => env('MAILCHIMP_APIKEY'),
+    'api_key' => env('MAILCHIMP_API_KEY'),
 ];

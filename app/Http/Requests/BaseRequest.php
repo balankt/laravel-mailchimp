@@ -8,8 +8,6 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 
-
-
 class BaseRequest extends FormRequest
 {
     /**
@@ -19,7 +17,9 @@ class BaseRequest extends FormRequest
      */
     public function authorize()
     {
-        /*In this api authentication don't used, so set true */
+        /**
+         * In this api authentication don't used, so set true
+         */
         return true;
     }
 

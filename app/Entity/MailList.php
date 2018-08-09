@@ -7,8 +7,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class MailList extends Model
 {
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
     public $timestamps = false;
 
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'id',
         'web_id',
@@ -58,9 +75,4 @@ class MailList extends Model
     {
         $this->attributes['date_created'] = Carbon::parse($value)->toDateTimeString();
     }
-    public function setIdAttribute($value)
-    {
-        $this->attributes['id'] = (string) $value;
-    }
-
 }

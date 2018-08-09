@@ -46,7 +46,7 @@ class ListMembersController extends Controller
      */
     public function store(ListMemberRequest $request, String $listId)
     {
-        return $this->sendResponse($this->service->store($listId, $request->all()), 'created', 201);
+        return $this->sendResponse($this->service->store($listId, $request->all()), 201);
     }
 
     /**
@@ -57,16 +57,17 @@ class ListMembersController extends Controller
      */
     public function update(ListMemberRequest $request, String $listId, String $memberHash)
     {
-        return $this->sendResponse($this->service->update($listId, $memberHash, $request->all()), 'updated', 200);
+        return $this->sendResponse($this->service->update($listId, $memberHash, $request->all()));
     }
 
     /**
      * @param String $listId
      * @param String $memberHash
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(String $listId, String $memberHash)
     {
-        return $this->sendResponse($this->service->delete($listId, $memberHash), 'deleted', 204);
+        return $this->sendResponse($this->service->delete($listId, $memberHash), 204);
     }
 }

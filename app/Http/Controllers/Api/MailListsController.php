@@ -43,7 +43,7 @@ class MailListsController extends Controller
      */
     public function store(MailListRequest $request)
     {
-        return $this->sendResponse($this->service->store($request->all()), 'created',201);
+        return $this->sendResponse($this->service->store($request->all()), 201);
     }
 
     /**
@@ -53,15 +53,16 @@ class MailListsController extends Controller
      */
     public function update(MailListRequest $request, string $listId)
     {
-        return $this->sendResponse($this->service->update($listId, $request->all()), 'updated',200);
+        return $this->sendResponse($this->service->update($listId, $request->all()));
     }
 
     /**
      * @param string $listId
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(string $listId)
     {
-        return $this->sendResponse($this->service->delete($listId), 'deleted',204);
+        return $this->sendResponse($this->service->delete($listId),204);
     }
 }
