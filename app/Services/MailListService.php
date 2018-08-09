@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Entity\ListMember;
 use App\Entity\MailList;
 use App\Jobs\DeleteMailList;
 use App\Jobs\UpdateMailList;
@@ -88,6 +89,7 @@ class MailListService
         }
         deleteMailList::dispatch($listId);
         $list->delete();
+        ListMember::where('list_id', 'like', $listId)->delete();
         return null;
     }
 }

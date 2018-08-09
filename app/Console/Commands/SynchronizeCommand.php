@@ -29,8 +29,11 @@ class SynchronizeCommand extends Command
 
     public function handle()
     {
-        $success = true;
         $lists = $this->mailChimp->get("lists");
+        if (!$lists){
+            echo 'Error: connection to MailChimp API failed. Check your MailChimp API key'.PHP_EOL;
+            return false;
+        }
         foreach ($lists['lists'] as $list) {
             $mailList = MailList::where('id', 'like', $list['id'])->first();
             if ($mailList) {
@@ -48,6 +51,6 @@ class SynchronizeCommand extends Command
                 }
             }
         }
-        return $success;
+        return true;
     }
 }

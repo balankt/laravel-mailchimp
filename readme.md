@@ -16,13 +16,18 @@ Set up MailChimp Api Key in .env file
 ```
 MAILCHIMP_API_KEY={Your api key}
 ```
+Run composer
+```
+composer install
+```
+Init laravel
+```
+docker-compose exec php-cli php -r "file_exists('.env') || copy('.env.example', '.env');" 
+docker-compose exec php-cli php artisan key:generate
+```
 Start migrations
 ```
 docker-compose exec php-cli php artisan migrate
-```
-Also start laravel queue worker
-```
-docker-compose exec php-cli php artisan queue:work
 ```
 Run synchronization command to get data from MailChimp
 ```
@@ -31,5 +36,9 @@ docker-compose exec php-cli php artisan mailchimp:synchronize
 Setup cron to run laravel scheduler for regular synchronization
 ```
 * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+```
+Also start laravel queue worker
+```
+docker-compose exec php-cli php artisan queue:work
 ```
 You can make requests using prepared postman collection (import to Postman the postman_collection.json)
