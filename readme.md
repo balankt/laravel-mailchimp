@@ -12,10 +12,6 @@ Begin with docker
 ```
 docker-compose up --build
 ```
-Set up MailChimp Api Key in .env file
-```
-MAILCHIMP_API_KEY={Your api key}
-```
 Run composer
 ```
 composer install
@@ -24,6 +20,10 @@ Init laravel
 ```
 docker-compose exec php-cli php -r "file_exists('.env') || copy('.env.example', '.env');" 
 docker-compose exec php-cli php artisan key:generate
+```
+Set up MailChimp Api Key in .env file
+```
+MAILCHIMP_API_KEY={Your api key}
 ```
 Start migrations
 ```
