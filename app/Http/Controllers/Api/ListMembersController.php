@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Services\ListMemberService;
 
 
-class MembersController extends Controller
+class ListMembersController extends Controller
 {
     private $service;
 

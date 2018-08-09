@@ -7,7 +7,7 @@ use App\Services\MailListService;
 use App\Http\Controllers\Controller;
 
 
-class ListsController extends Controller
+class MailListsController extends Controller
 {
     private $service;
 

@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use App\Entity\ListMember;
+use App\Jobs\DeleteListMember;
+use App\Jobs\SynchronizeListMembers;
+use App\Jobs\UpdateListMember;
 use DrewM\MailChimp\MailChimp;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -10,29 +13,30 @@ class ListMemberService
 {
     private $mailChimp;
 
-    public function __construct()
+    /**
+     * ListMemberService constructor.
+     * @param MailChimp $mailChimp
+     */
+    public function __construct(MailChimp $mailChimp)
     {
-        try {
-            $this->mailChimp = new MailChimp(env('MAILCHIMP_APIKEY'));
-        } catch (\Exception $exception) {
-
-        }
+        $this->mailChimp = $mailChimp;
     }
 
+    /**
+     * @param String $listId
+     * @return array
+     */
     public function getAll(String $listId)
     {
-        $data = $this->mailChimp->get("lists/{$listId}/members");
-        foreach ($data['members'] as $item) {
-            $member = ListMember::where('id', 'like', $item['id'])->first();
-            if ($member) {
-                $member->update($item);
-            } else {
-                ListMember::create($item);
-            }
-        }
+        SynchronizeListMembers::dispatch($listId);
         return ListMember::all()->toArray();
     }
 
+    /**
+     * @param String $listId
+     * @param String $memberHash
+     * @return array
+     */
     public function getOne(String $listId, String $memberHash)
     {
         $member = ListMember::where('list_id', 'like', $listId)->where('id', 'like', $memberHash)->first();
@@ -46,37 +50,51 @@ class ListMemberService
         return $member->toArray();
     }
 
+    /**
+     * @param String $listId
+     * @param array $data
+     * @return array
+     */
     public function store(String $listId, Array $data)
     {
         $response = $this->mailChimp->post("lists/{$listId}/members", $data);
         if (!empty($response['status']) && $response['status'] === 400) {
             throw new \DomainException($response['detail']);
         }
-        return ListMember::create($response);
+        return ListMember::create($response)->toArray();
     }
 
+    /**
+     * @param String $listId
+     * @param String $memberHash
+     * @param array $data
+     * @return array
+     */
     public function update(String $listId, String $memberHash, Array $data)
     {
         $member = ListMember::where('list_id', 'like', $listId)->where('id', 'like', $memberHash)->first();
         if (!$member) {
             throw new ModelNotFoundException();
         }
-        $response = $this->mailChimp->patch("lists/{$listId}/members/{$memberHash}", $data);
-        if (!empty($response['status']) && $response['status'] === 404) {
-            throw new ModelNotFoundException();
-        }
+        UpdateListMember::dispatch($listId, $memberHash, $data);
         $member->update($data);
         return $member->toArray();
     }
 
+    /**
+     * @param String $listId
+     * @param String $memberHash
+     * @return null
+     * @throws \Exception
+     */
     public function delete(String $listId, String $memberHash)
     {
         $member = ListMember::where('list_id', 'like', $listId)->where('id', 'like', $memberHash)->first();
         if (!$member) {
             throw new ModelNotFoundException();
         };
+        DeleteListMember::dispatch($listId,$memberHash);
         $member->delete();
-        $this->mailChimp->delete("lists/{$listId}/members/{$memberHash}");
         return null;
     }
 }

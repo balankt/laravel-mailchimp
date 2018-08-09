@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use App\Entity\MailList;
+use App\Jobs\DeleteMailList;
+use App\Jobs\SynchronizeMailLists;
+use App\Jobs\UpdateMailList;
 use DrewM\MailChimp\MailChimp;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -10,29 +13,28 @@ class MailListService
 {
     private $mailChimp;
 
-    public function __construct()
+    /**
+     * MailListService constructor.
+     * @param MailChimp $mailChimp
+     */
+    public function __construct(MailChimp $mailChimp)
     {
-        try {
-            $this->mailChimp = new MailChimp(env('MAILCHIMP_APIKEY'));
-        } catch (\Exception $exception) {
-
-        }
+            $this->mailChimp = $mailChimp;
     }
 
+    /**
+     * @return array
+     */
     public function getAll()
     {
-        $data = $this->mailChimp->get("lists");
-        foreach ($data['lists'] as $list) {
-            $mailList = MailList::where('id', 'like', $list['id'])->first();
-            if ($mailList) {
-                $mailList->update($list);
-            } else {
-                MailList::create($list);
-            }
-        }
+        SynchronizeMailLists::dispatch();
         return MailList::all()->toArray();
     }
 
+    /**
+     * @param String $listId
+     * @return array
+     */
     public function getOne(String $listId)
     {
         $list = MailList::where('id', 'like', $listId)->first();
@@ -46,37 +48,48 @@ class MailListService
         return $list->toArray();
     }
 
+    /**
+     * @param array $data
+     * @return array
+     */
     public function store(Array $data)
     {
         $response = $this->mailChimp->post("lists", $data);
         if (!empty($response['status']) && $response['status'] === 400) {
             throw new \DomainException($response['detail']);
         }
-        return MailList::create($response);
+        return MailList::create($response)->toArray();
     }
 
+    /**
+     * @param String $listId
+     * @param array $data
+     * @return array
+     */
     public function update(String $listId, Array $data)
     {
         $list = MailList::where('id', 'like', $listId)->first();
         if (!$list) {
             throw new ModelNotFoundException();
         }
-        $this->mailChimp->patch("lists/{$listId}", $data);
-        if (!empty($result['status']) && $result['status'] === 404) {
-            throw new ModelNotFoundException();
-        }
+        UpdateMailList::dispatch($listId, $data);
         $list->update($data);
         return $list->toArray();
     }
 
+    /**
+     * @param String $listId
+     * @return null
+     * @throws \Exception
+     */
     public function delete(String $listId)
     {
         $list = MailList::where('id', 'like', $listId)->first();
         if (!$list) {
             throw new ModelNotFoundException();
         }
+        deleteMailList::dispatch($listId);
         $list->delete();
-        $this->mailChimp->delete("lists/{$listId}");
         return null;
     }
 }

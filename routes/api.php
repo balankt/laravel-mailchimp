@@ -15,9 +15,9 @@ Route::group(['as' => 'api.', 'namespace' => 'Api'],
         /**
          * Lists
          */
-        Route::apiResource('lists', 'ListsController');
+        Route::apiResource('lists', 'MailListsController');
         /**
          * Members
          */
-        Route::apiResource('lists.members', 'MembersController');
+        Route::apiResource('lists.members', 'ListMembersController');
     });
