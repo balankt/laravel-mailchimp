@@ -5,7 +5,7 @@ services:
             context: ./
             dockerfile: ./.docker/nginx.docker
         volumes:
-            - ./:/var/www:cached
+            - ./:/var/www
             - ./.docker/nginx/ssl:/etc/nginx/ssl
         ports:
             - "8080:443"
@@ -27,7 +27,7 @@ services:
             context: ./
             dockerfile: ./.docker/php-cli.docker
         volumes:
-            - ./:/var/www:cached
+            - ./:/var/www
         links:
             - mysql
         environment:
@@ -37,7 +37,7 @@ services:
     mysql:
         image: mysql:5.7
         volumes:
-            - ./.db:/var/lib/mysql:cached
+            - ./.db:/var/lib/mysql
         command: mysqld --sql-mode=NO_ENGINE_SUBSTITUTION
         environment:
             - "MYSQL_ROOT_PASSWORD=secret"
@@ -45,7 +45,7 @@ services:
             - "MYSQL_PASSWORD=secret"
             - "MYSQL_DATABASE=app"
         ports:
-            - "3306:3306"
+            - "33061:3306"
     phpmyadmin:
         image: phpmyadmin/phpmyadmin:latest
         environment:
