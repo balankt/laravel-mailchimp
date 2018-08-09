@@ -33,7 +33,7 @@ Run synchronization command to get data from MailChimp
 ```
 docker-compose exec php-cli php artisan mailchimp:synchronize
 ```
-Setup cron to run laravel scheduler for regular synchronization
+Setup cron to run laravel scheduler for regular synchronization, if needed
 ```
 * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
 ```
